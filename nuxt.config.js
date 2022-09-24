@@ -52,5 +52,6 @@ export default {
     transpile: [/^element-ui/],
   },
 
-  loading: {color: '#409EFF'}
+  loading: {color: '#409EFF'},
+  serverMiddleware: ['@/server/index.js']
 }
