@@ -5,29 +5,26 @@
     ref="form"
     @submit.native.prevent="onSubmit"
   >
-    <h2>Добавить комментарий</h2>
-    <el-form-item
-      label="Ваше имя"
-      prop="name"
-    >
+    <h1>Добавить комментарий</h1>
+
+    <el-form-item label="Ваше имя" prop="name">
       <el-input v-model.trim="controls.name" />
     </el-form-item>
-    <el-form-item
-      label="Текст комментария"
-      prop="text"
-    >
+
+    <el-form-item label="Текст комментария" prop="text">
       <el-input
         type="textarea"
-        resize="none"
         v-model.trim="controls.text"
+        resize="none"
         :rows="2"
       />
     </el-form-item>
+
     <el-form-item>
       <el-button
         type="primary"
-        round
         native-type="submit"
+        round
         :loading="loading"
       >
         Добавить комментарий
@@ -43,22 +40,14 @@ export default {
       loading: false,
       controls: {
         name: '',
-        text: '',
+        text: ''
       },
       rules: {
         name: [
-          {
-            required: true,
-            message: 'Имя не должно быть пустым',
-            trigger: 'blur',
-          }
+          { required: true, message: 'Имя не должно быть пустым', trigger: 'blur' }
         ],
         text: [
-          {
-            required: true,
-            message: 'Введите ваш комментарий',
-            trigger: 'blur',
-          }
+          { required: true, message: 'Введите ваш комментарий', trigger: 'blur' }
         ]
       }
     }
@@ -67,29 +56,33 @@ export default {
     onSubmit() {
       this.$refs.form.validate(valid => {
         if (valid) {
-          this.loading = true;
+
+          this.loading = true
 
           const formData = {
             name: this.controls.name,
             text: this.controls.text,
-            postId: '',
+            postId: ''
           }
 
           try {
             setTimeout(() => {
-              this.$emit('created');
-              this.$message.success('Комментарий добавлен');
-            }, 1000)
+              this.$message.success('Комментарий добавлен')
+              this.$emit('created')
+            }, 2000)
           } catch (e) {
-            this.loading = false;
+            this.loading = false
           }
         }
-      });
+      })
     }
   }
 }
 </script>
 
+
 <style lang="scss" scoped>
 
 </style>
+
+

@@ -1,23 +1,22 @@
-const {Schema, model} = require('mongoose');
-const { ModuleFilenameHelpers } = require('webpack');
+const {Schema, model} = require('mongoose')
 
 const commentSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   text: {
     type: String,
-    required: true,
+    required: true
   },
   date: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   },
   postId: {
     ref: 'posts',
-    type: Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId
   }
-});
+})
 
-module.exports = model('comments', commentSchema);
+module.exports = model('comments', commentSchema)

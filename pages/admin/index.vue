@@ -1,5 +1,5 @@
 <template>
-  <h1>Welcome to Admin page</h1>
+  <h1>Welcome to admin page</h1>
 </template>
 
 <script>
@@ -9,6 +9,3 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>

@@ -4,33 +4,27 @@
     :body-style="{padding: 0}"
     class="post"
   >
-    <header
-      slot="header"
-      class="post-header"
-    >
-      <h3>Post title</h3>
+    <header slot="header" class="post-header">
+      <h3>{{ post.title }}</h3>
+
       <small>
-        <i class="el-icon-time" />
-        {{ new Date().toLocaleString() }}
+        <i class="el-icon-time"></i>
+        {{ new Date(post.date).toLocaleString() }}
       </small>
     </header>
-    <div class="post-image">
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/f/f7/International_Business_Center._Tashkent_city.jpg"
-        alt="Tashkent"
+    <div class="post-body">
+      <img 
+        :src="post.imageUrl" 
+        alt="post image" 
         class="post-img"
       >
     </div>
     <footer class="post-footer">
-      <el-button
-        round
-        @click="openPost"
-      >
-        Открыть пост
-      </el-button>
+      <el-button round @click="openPost">Открыть</el-button>
+
       <span>
-        <i class="el-icon-message" />
-        13
+        <i class="el-icon-message"></i>
+        {{ post.comments.length }}
       </span>
     </footer>
   </el-card>
@@ -38,11 +32,16 @@
 
 <script>
 export default {
+  props: {
+    post: {
+      type: Object,
+      required: true,
+    }
+  },
   methods: {
     openPost() {
-      const id = 'test-id';
+      const id = this.post._id;
       this.$router.push(`/post/${id}`)
-      // this.$router.push(`/post/${this.post.id}`)
     }
   }
 }
@@ -51,24 +50,25 @@ export default {
 <style lang="scss" scoped>
   .post {
     margin-bottom: 1.5rem;
+  }
 
-    &-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    &-image {
-      font-size: 0;
-    }
-    &-img {
-      width: 100%;
-      height: auto;
-    }
-    &-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem;
-    }
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .post-img {
+    width: 100%;
+    height: auto;
+  }
+
+  .post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
   }
 </style>
+
+

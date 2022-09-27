@@ -27,11 +27,7 @@
     </el-table-column>
     <el-table-column label="Действия">
       <template slot-scope="{row}">
-        <el-tooltip
-          effect="dark"
-          content="Открыть пост"
-          placement="top"
-        >
+        <el-tooltip effect="dark" content="Открыть пост" placement="top">
           <el-button
             icon="el-icon-edit"
             type="primary"
@@ -39,11 +35,7 @@
             @click="open(row._id)"
           />
         </el-tooltip>
-        <el-tooltip
-          effect="dark"
-          content="Удалить пост"
-          placement="top"
-        >
+        <el-tooltip effect="dark" content="Удалить пост" placement="top">
           <el-button
             icon="el-icon-delete"
             type="danger"
@@ -59,14 +51,13 @@
 <script>
 export default {
   layout: 'admin',
-  middlewrare: ['admin-auth'],
+  middleware: ['admin-auth'],
   async asyncData({store}) {
-    const posts = await store.dispatch('post/fetchAdmin');
-    return {posts};
+    const posts = await store.dispatch('post/fetchAdmin')
+    return {posts}
   },
   methods: {
     open(id) {
-      console.log('open', id);
       this.$router.push(`/admin/post/${id}`)
     },
     async remove(id) {
@@ -76,17 +67,13 @@ export default {
           cancelButtonText: 'Отменить',
           type: 'warning'
         })
-        await this.$store.dispatch('post/remove', id);
-        this.posts = this.posts.filter(post => post._id !== id);
+        await this.$store.dispatch('post/remove', id)
+        this.posts = this.posts.filter(p => p._id !== id)
+
         this.$message.success('Пост удален')
-      } catch (e) {
-        
-      }
+      } catch (e) {}
+
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

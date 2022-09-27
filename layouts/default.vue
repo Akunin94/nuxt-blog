@@ -1,31 +1,26 @@
 <template>
-  <div class="empty-layout">
-    <nuxt />
-  </div>
+  <el-container>
+    <el-header>
+      <app-navigation />
+    </el-header>
+    <el-main>
+      <nuxt />
+    </el-main>
+    <el-footer />
+  </el-container>
 </template>
 
 <script>
+import AppNavigation from '@/components/main/Navigation'
+
 export default {
-  computed: {
-    error() {
-      return this.$store.getters.error;
-    }
-  },
-  watch: {
-    error(value) {
-      this.$message.error(value);
-    }
+  components: {
+    AppNavigation
   }
 }
 </script>
 
-<style lang="scss" scoped>
-  .empty-layout {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-    padding: 1rem;
-}
+
+<style>
+
 </style>

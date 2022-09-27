@@ -1,8 +1,16 @@
-const {Router} = require('express');
-const {login, createUser} = require('../controllers/auth.controller');
-const router = Router();
+const {Router} = require('express')
+const passport = require('passport')
+const {login, createUser} = require('../controllers/auth.controller')
+const router = Router()
 
-router.post('/admin/login', login);
-router.post('/admin/create', createUser);
+// /api/auth/admin/login
+router.post('/admin/login', login)
 
-module.exports = router;
+// /api/auth/admin/create
+router.post(
+  '/admin/create',
+  passport.authenticate('jwt', {session: false}),
+  createUser
+)
+
+module.exports = router

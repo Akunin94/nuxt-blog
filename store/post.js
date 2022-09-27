@@ -4,39 +4,70 @@ const posts = [
 ]
 
 export const actions = {
-  async fetchAdmin({}) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve(posts)
-      }, 500)
-    })
+  async fetchAdmin({commit}) {
+    try {
+      return await this.$axios.$get('/api/post/admin');
+    } catch (e) {
+      commit('setError', e, {root: true})
+      throw e;
+    }
   },
-  async fetchAdminById({}, id) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve(posts.find(post => post._id === id))
-      }, 500)
-    })
+  async fetch({commit}) {
+    try {
+      return await this.$axios.$get('/api/post');
+    } catch (e) {
+      commit('setError', e, {root: true})
+      throw e;
+    }
   },
-  async remove({}, id) {
-    
+  async fetchAdminById({commit}, id) {
+    try {
+      return await this.$axios.$get(`/api/post/admin/${id}`);
+    } catch (e) {
+      commit('setError', e, {root: true})
+      throw e;
+    }
   },
-  async update({}, {text, id}) {
-    
+  async fetchById({commit}, id) {
+    try {
+      return await this.$axios.$get(`/api/post/${id}`);
+    } catch (e) {
+      commit('setError', e, {root: true})
+      throw e;
+    }
+  },
+  async remove({commit}, id) {
+    try {
+      return await this.$axios.$delete(`/api/post/admin/${id}`);
+    } catch (e) {
+      commit('setError', e, {root: true})
+      throw e;
+    }
+  },
+  async update({commit}, {text, id}) {
+    try {
+      return await this.$axios.$put(`/api/post/admin/${id}`, {text});
+    } catch (e) {
+      commit('setError', e, {root: true})
+      throw e;
+    }
   },
   async create({commit}, {title, text, image}) {
     try {
       const formData = new FormData();
       formData.append('title', title);
       formData.append('text', text);
-      console.log(image)
       formData.append('image', image, image.name);
 
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve()
-        }, 500)
-      })
+      return await this.$axios.$post('/api/post/admin', formData);
+    } catch (e) {
+      commit('setError', e, {root: true})
+      throw e;
+    }
+  },
+  async addView({commit}, {_id, views}) {
+    try {
+      return await this.$axios.$put(`/api/post/add/view/${_id}`, {views});
     } catch (e) {
       commit('setError', e, {root: true})
       throw e;

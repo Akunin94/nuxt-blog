@@ -1,47 +1,40 @@
-<template>    
+<template>
   <el-form
-    :style="{maxWidth: '600px'}"
     :model="controls"
     :rules="rules"
     ref="form"
     @submit.native.prevent="onSubmit"
   >
-    <h2 class="mb-1">Создать новый пост</h2>
-    <el-form-item
-      label="Название поста"
-      prop="title"
-    >
-      <el-input v-model.trim="controls.title" />
-    </el-form-item>
-    <el-form-item
-      label="Текст в формате .md или .html"
-      prop="text"
-    >
+
+    <h1 class="mb">Создать новый пост</h1>
+
+    <el-form-item label="Введите название поста" prop="title">
       <el-input
-        type="textarea"
-        resize="none"
-        :rows="10"
-        v-model="controls.text" 
+        v-model="controls.title"
       />
     </el-form-item>
-    <el-button
-      type="success"
-      plain
-      @click="previewDialog = true"
-      class="mb-2"
-    >
+
+    <el-form-item label="Текст в формате .md или .html" prop="text">
+      <el-input
+        type="textarea"
+        v-model="controls.text"
+        resize="none"
+        :rows="10"
+      />
+    </el-form-item>
+
+    <el-button class="mb" type="success" plain @click="previewDialog = true">
       Предпросмотр
     </el-button>
-    <el-dialog
-      title="Предпросмотр"
-      :visible.sync="previewDialog"
-    >
+
+    <el-dialog title="Предпросмотр" :visible.sync="previewDialog">
       <div :key="controls.text">
-        <VueMarkdown>{{ controls.text }}</VueMarkdown>
+        <vue-markdown>{{controls.text}}</vue-markdown>
       </div>
     </el-dialog>
+
     <el-upload
-      class="mb-1"
+      class="mb"
       drag
       ref="upload"
       action="https://jsonplaceholder.typicode.com/posts/"
@@ -50,13 +43,14 @@
     >
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">Перетащите картинку <em>или нажмите</em></div>
-      <div class="el-upload__tip" slot="tip">Файлы с расширением jpg/png</div>
+      <div class="el-upload__tip" slot="tip">файлы с расширением jpg/png</div>
     </el-upload>
+
     <el-form-item>
       <el-button
         type="primary"
-        round
         native-type="submit"
+        round
         :loading="loading"
       >
         Создать пост
@@ -68,7 +62,7 @@
 <script>
 export default {
   layout: 'admin',
-  middlewrare: ['admin-auth'],
+  middleware: ['admin-auth'],
   data() {
     return {
       image: null,
@@ -76,32 +70,27 @@ export default {
       loading: false,
       controls: {
         title: '',
-        text: '',
+        text: ''
       },
       rules: {
-        title: [
-          {
-            required: true,
-            message: 'Введите название',
-            trigger: 'blur',
-          }
-        ],
         text: [
-          {
-            required: true,
-            message: 'Введите текст',
-            trigger: 'blur',
-          }
+          { required: true, message: 'Текст не должен быть пустым', trigger: 'blur' }
+        ],
+        title: [
+          { required: true, message: 'Название поста не может быть пустым', trigger: 'blur' }
         ]
       }
     }
   },
   methods: {
+    handleImageChange(file, fileList) {
+      this.image = file.raw
+    },
     onSubmit() {
       this.$refs.form.validate(async valid => {
         if (valid && this.image) {
-          this.loading = true;
-          
+          this.loading = true
+
           const formData = {
             title: this.controls.title,
             text: this.controls.text,
@@ -109,29 +98,26 @@ export default {
           }
 
           try {
-            await this.$store.dispatch('post/create', formData);
-            this.$message.success('Пост создан');
-            this.controls.title = '';
-            this.controls.text = '';
-            this.image = '';
-            this.$refs.upload.clearFiles();
-          } catch (e) {
-            
-          } finally {
-            this.loading = false;
+            await this.$store.dispatch('post/create', formData)
+            this.controls.text = ''
+            this.controls.title = ''
+            this.image = null
+            this.$refs.upload.clearFiles()
+            this.$message.success('Пост создан')
+          } catch (e) {} finally {
+            this.loading = false
           }
         } else {
           this.$message.warning('Форма не валидна')
         }
       })
-    },
-    handleImageChange(file,filelist) {
-      this.image = file.raw
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
+  form {
+    width: 600px;
+  }
 </style>

@@ -5,9 +5,9 @@
 <script>
 export default {
   layout: 'admin',
-  middlewrare: ['admin-auth'],
+  middleware: ['admin-auth'],
   beforeCreate() {
-    this.$store.dispatch('auth/logout');
+    this.$store.dispatch('auth/logout')
     this.$router.push('/admin/login?message=logout')
   }
 }

@@ -1,8 +1,8 @@
 <template>
   <el-menu
+    router
     :style="{height: '100%'}"
     :default-active="$route.path"
-    router
   >
     <el-menu-item index="/admin">
       <i class="el-icon-menu"></i>
@@ -10,7 +10,7 @@
     </el-menu-item>
     <el-menu-item index="/admin/create">
       <i class="el-icon-edit-outline"></i>
-      <span>Создать пост</span>
+      <span>Создать</span>
     </el-menu-item>
     <el-menu-item index="/admin/list">
       <i class="el-icon-tickets"></i>
