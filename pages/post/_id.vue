@@ -1,8 +1,8 @@
 <template>
-  <article class="post" v-if="post">
+  <article class="post">
     <header class="post-header">
       <div class="post-title">
-        <h1>{{ post.title }}</h1>
+        <h1>{{post.title}}</h1>
         <nuxt-link to="/">
           <i class="el-icon-back"></i>
         </nuxt-link>
@@ -14,7 +14,7 @@
         </small>
         <small>
           <i class="el-icon-view"></i>
-          {{ post.views + 1 }}
+          {{post.views}}
         </small>
       </div>
       <div class="post-image">
@@ -25,7 +25,7 @@
       </div>
     </header>
     <main class="post-content">
-      <vue-markdown>{{ post.text }}</vue-markdown>
+      <vue-markdown>{{post.text}}</vue-markdown>
     </main>
     <footer>
       <app-comment-form
@@ -54,13 +54,15 @@ export default {
     return Boolean(params.id)
   },
   async asyncData({store, params}) {
-    const post = await store.dispatch('post/fetchById', params.id);
-    await store.dispatch('post/addView', post);
-    return {post};
+    const post = await store.dispatch('post/fetchById', params.id)
+    await store.dispatch('post/addView', post)
+    return {
+      post: {...post, views: ++post.views}
+    }
   },
   data() {
     return {
-      canAddComment: true,
+      canAddComment: true
     }
   },
   methods: {

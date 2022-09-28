@@ -4,7 +4,7 @@ export const state = () => ({
 
 export const actions = {
   nuxtServerInit({dispatch}) {
-    dispatch('auth/autoLogin');
+    dispatch('auth/autoLogin')
   }
 }
 

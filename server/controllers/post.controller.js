@@ -36,7 +36,7 @@ module.exports.getById = async (req, res) => {
 
 module.exports.update = async (req, res) => {
   const $set = {
-    text: req.body.text
+    text: req.body.text,
   }
   try {
     const post = await Post.findOneAndUpdate({

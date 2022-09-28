@@ -17,7 +17,7 @@ export default {
     title: 'Главная'
   },
   async asyncData({store}) {
-    const posts = await store.dispatch('post/fetch');
+    const posts = await store.dispatch('post/fetch')
     return {posts}
   },
   components: {

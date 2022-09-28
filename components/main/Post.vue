@@ -5,7 +5,7 @@
     class="post"
   >
     <header slot="header" class="post-header">
-      <h3>{{ post.title }}</h3>
+      <h3>{{post.title}}</h3>
 
       <small>
         <i class="el-icon-time"></i>
@@ -13,9 +13,9 @@
       </small>
     </header>
     <div class="post-body">
-      <img 
-        :src="post.imageUrl" 
-        alt="post image" 
+      <img
+        :src="post.imageUrl"
+        alt="post image"
         class="post-img"
       >
     </div>
@@ -24,7 +24,8 @@
 
       <span>
         <i class="el-icon-message"></i>
-        {{ post.comments.length }}
+
+        {{post.comments.length}}
       </span>
     </footer>
   </el-card>
@@ -35,12 +36,12 @@ export default {
   props: {
     post: {
       type: Object,
-      required: true,
+      required: true
     }
   },
   methods: {
     openPost() {
-      const id = this.post._id;
+      const id = this.post._id
       this.$router.push(`/post/${id}`)
     }
   }

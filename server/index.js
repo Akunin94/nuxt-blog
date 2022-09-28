@@ -1,27 +1,31 @@
 const express = require('express')
-const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
-const passport = require('passport')
-const passportStrategy = require('./middleware/passport-strategy')
-const authRoutes = require('./routes/auth.routes')
-const postRoutes = require('./routes/post.routes')
-const commentRoutes = require('./routes/comment.routes')
-const keys = require('./keys')
-const app = express()
+const consola = require('consola')
+const { Nuxt, Builder } = require('nuxt')
+const app = require('./app')
 
-mongoose.connect(keys.MONGO_URI)
-  .then(() => console.log('MongoDB connected...'))
-  .catch(error => console.error(error))
+const config = require('../nuxt.config.js')
+config.dev = !(process.env.NODE_ENV === 'production')
 
-app.use(passport.initialize())
-passport.use(passportStrategy)
+async function start() {
+  const nuxt = new Nuxt(config)
 
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(bodyParser.json())
+  const {
+    host = process.env.HOST || '127.0.0.1',
+    port = process.env.PORT || 3000
+  } = nuxt.options.server
 
+  if (config.dev) {
+    const builder = new Builder(nuxt)
+    await builder.build()
+  }
 
-app.use('/api/auth', authRoutes)
-app.use('/api/post', postRoutes)
-app.use('/api/comment', commentRoutes)
+  app.use(nuxt.render)
 
-module.exports = app
+  app.listen(port, host, () => {
+    consola.ready({
+      message: `Server listening on http://${host}:${port}`,
+      badge: true
+    })
+  })
+}
+start()
