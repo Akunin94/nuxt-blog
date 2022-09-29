@@ -2,8 +2,6 @@ const pkg = require('./package')
 
 
 module.exports = {
-  mode: 'universal',
-
   head: {
     title: pkg.name,
     meta: [
@@ -33,6 +31,10 @@ module.exports = {
   ],
 
   axios: {},
+
+  env: {
+    appName: 'SSR Blog'
+  },
 
   build: {
     transpile: [/^element-ui/],
