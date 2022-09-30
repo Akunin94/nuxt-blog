@@ -27,8 +27,13 @@ module.exports = {
   ],
 
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/pwa',
   ],
+
+  workbox: {},
+
+  meta: {},
 
   axios: {},
 
