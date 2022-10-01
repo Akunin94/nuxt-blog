@@ -90,3 +90,5 @@ sw.*
 *.swp
 
 sw.*
+
+server/keys/keys.dev.js
